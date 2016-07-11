@@ -20,9 +20,15 @@ export default (state = INITIAL_STATE, action) => {
     case 'ADD_PRODUCT_TO_CART':
       // console.log('cartItem qyt', state.get('cart').find( item => {return item.get('id') === action.id}))
       console.log('Old state', state.toJS())
-      const newState = state.get('cart', state.get('cart').find( item => {return item.get('id') === action.id}) ? 
-          state.get('cart').find( item => {return item.get('id') === action.id}).set('qyt', 5): null
-        )
+
+      const exists = state.get('cart').findIndex( item => {return item.get('id') === action.id})
+      console.log('exists', exists)
+      let newState = {}
+      if(exists >= 0){
+        newState = state.setIn(['cart', exists, 'qyt'], state.getIn(['cart', exists, 'qyt']) + 1)
+      }else{
+        newState = state.set('cart', state.get('cart').push(fromJS({id:action.id,qyt:1})))
+      }
       console.log('New state', newState.toJS())
 
       return newState

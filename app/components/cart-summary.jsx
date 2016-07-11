@@ -6,6 +6,7 @@ class CartSummary extends Component {
     const products = this.props.products.filter(p => {
       return this.props.cart.find(cartItem => {return cartItem.get('id') == p.get('id')})
     }).map(p => {return p.set('qyt', this.props.cart.find(cartItem => {return cartItem.get('id') == p.get('id')}).get('qyt'))})
+    
     console.log('cart', this.props.cart.toJS())
     console.log('cart product1',products.toJS())
     // products.map(p => {return p.set({'qyt', this.props.cart.get('id')})})
